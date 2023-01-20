@@ -26,4 +26,3 @@ COPY . /code/
 # 配置文件
 COPY k8s/code/.env /code/.env
 
-rm -rf /code/k8s
