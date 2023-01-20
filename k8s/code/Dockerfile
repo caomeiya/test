@@ -24,5 +24,5 @@ COPY --from=composer /project/vendor/ /code/vendor/
 COPY . /code/
 
 # 配置文件
-COPY k8s/code/.env.local /code/.env
+COPY /code/k8s/code/.env.local /code/.env
 
