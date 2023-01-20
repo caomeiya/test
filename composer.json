@@ -1,0 +1,6 @@
+{
+    "require": {
+        "topthink/think-orm": "^2.0",
+        "symfony/dotenv": "^5.4"
+    }
+}

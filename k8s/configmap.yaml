@@ -1,0 +1,8 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: common-env
+data:
+  APOLLO_URL: http://10.111.3.130:8080
+  APOLLO_SECRET: f32c2125e656481885fcab7b2489c0a0
+
