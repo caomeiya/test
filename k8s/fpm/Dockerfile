@@ -12,5 +12,3 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 WORKDIR /var/www
 
 EXPOSE 9000
-
-CMD ["php-fpm"]
