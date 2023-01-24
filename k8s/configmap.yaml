@@ -29,7 +29,7 @@ data:
         #add_header Access-Control-Allow-Origin *;
         #add_header Access-Control-Allow-Headers *;
         access_log  /var/log/nginx/wujushe.admin.access.log  custome;
-      error_log /var/log/nginx/wujushe.admin.error.log;
+        error_log /var/log/nginx/wujushe.admin.error.log;
 
         root   /var/www/public;
         index  index.html index.htm index.php;
