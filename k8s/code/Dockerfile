@@ -26,3 +26,5 @@ COPY . /code/
 # 配置文件
 COPY ./k8s/dockecode/.env.local /code/.env
 
+# 入口
+CMD ["sh"]
