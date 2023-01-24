@@ -13,4 +13,4 @@ WORKDIR /var/www
 
 EXPOSE 9000
 
-ENTRYPOINT ["sh","./entrypoint.sh"]
+CMD ["php-fpm"]
