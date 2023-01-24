@@ -19,7 +19,7 @@ RUN wget -c https://github.com/top-think/framework/archive/v${TP_VERSION}.zip -O
     && wget -c https://github.com/top-think/think/archive/v${TP_VERSION}.zip -O tp${TP_VERSION}.zip \
     && unzip tp${TP_VERSION}.zip && mv think-${TP_VERSION}/* ./
 
-ADD ./phpinfo.php $APPROOT/public 
+ADD ./k8s/code01/phpinfo.php $APPROOT/public 
 
 # 挂载
 VOLUME $APPROOT
