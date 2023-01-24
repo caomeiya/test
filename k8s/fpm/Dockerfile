@@ -7,8 +7,7 @@ COPY k8s/fpm/error.ini /usr/local/etc/php/conf.d/
 
 # Set timezone  & bak crontab
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-		 && echo "Asia/Shanghai" > /etc/timezone \
-		 && cp /etc/crontab /etc/crontab.bak
+		 && echo "Asia/Shanghai" > /etc/timezone 
 
 WORKDIR /var/www
 
