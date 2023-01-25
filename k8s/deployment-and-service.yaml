@@ -46,7 +46,7 @@ spec: # Deployment 对象规约
           ports:
             - containerPort: 80 # nginx 端口
           volumeMounts: # nginx 容器挂载了两个 volume，一个是与 代码容器共享的 volume，另外一个是配置了 nginx.conf 的 volume
-            - mountPath: /var/www/html # 挂载两个容器共享的 volume 
+            - mountPath: /var/www # 挂载两个容器共享的 volume 
               name: www-code
             - mountPath: /etc/nginx/nginx.conf #  挂载配置了 nginx.conf 的 volume
               subPath: NGINX_CONF
@@ -58,7 +58,6 @@ spec: # Deployment 对象规约
                   - sh
                   - '-c'
                   - sleep 5 && /usr/sbin/nginx -s quit # 优雅退出    
-
       volumes:
         - name: www-code # 三个个容器共享 都 volumeMounts 了
           emptyDir: {}
