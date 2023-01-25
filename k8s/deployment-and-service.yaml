@@ -28,6 +28,7 @@ spec: # Deployment 对象规约
         #       name: www-code
         - name: php-fpm # 第二个容器名称
           image: leaveluke/fpm:v1 # 容器镜像
+          imagePullPolicy: Always
           ports:
               - containerPort: 9000 # php-fpm 端口
           volumeMounts: # 挂载数据卷
