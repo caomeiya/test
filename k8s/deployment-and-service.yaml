@@ -15,7 +15,7 @@ spec: # Deployment 对象规约
       initContainers:
         #php程序本身
         - name: php-code
-          image: leaveluke/code
+          image: leaveluke/code:v1
           imagePullPolicy: Always
           volumeMounts:
           - mountPath: /code
@@ -27,7 +27,7 @@ spec: # Deployment 对象规约
         #     - mountPath: /code # 挂载两个容器共享的 volume 
         #       name: www-code
         - name: php-fpm # 第二个容器名称
-          image: leaveluke/fpm # 容器镜像
+          image: leaveluke/fpm:v1 # 容器镜像
           ports:
               - containerPort: 9000 # php-fpm 端口
           volumeMounts: # 挂载数据卷
