@@ -1,0 +1,77 @@
+kind: Deployment # 对象类型
+apiVersion: apps/v1 # api 版本
+metadata: # 元数据
+  name: php-fpm-nginx # Deployment 对象名称
+spec: # Deployment 对象规约
+  selector: # 选择器
+    matchLabels: # 标签匹配
+      app: php-fpm-nginx
+  replicas: 1 # 副本数量
+  template: # 模版
+    metadata: # Pod 对象的元数据
+      labels: # Pod 对象的标签
+        app: php-fpm-nginx
+    spec: # Pod 对象规约
+      initContainers:
+        #php程序本身
+        - name: php-code
+          image: leaveluke/code
+          imagePullPolicy: Always
+          volumeMounts:
+          - mountPath: /code
+            name: www-code
+      containers: # 这里设置了两个容器
+        # - name: php-code # 第一个容器名称
+        #   image: leaveluke/code # 容器镜像
+        #   volumeMounts: # 挂载数据卷
+        #     - mountPath: /code # 挂载两个容器共享的 volume 
+        #       name: www-code
+        - name: php-fpm # 第二个容器名称
+          image: leaveluke/fpm # 容器镜像
+          ports:
+              - containerPort: 9000 # php-fpm 端口
+          volumeMounts: # 挂载数据卷
+              - mountPath: /var/www # 挂载两个容器共享的 volume 
+                name: www-code
+          lifecycle: # 生命周期
+            preStop:
+              exec:
+                command:
+                  - sh
+                  - '-c'
+                  - sleep 5 && kill -SIGQUIT 1 # 优雅退出
+        - name: nginx # 第三个容器名称
+          image: nginx # 容器镜像
+          ports:
+            - containerPort: 80 # nginx 端口
+          volumeMounts: # nginx 容器挂载了两个 volume，一个是与 代码容器共享的 volume，另外一个是配置了 nginx.conf 的 volume
+            - mountPath: /var/www/html # 挂载两个容器共享的 volume 
+              name: www-code
+            - mountPath: /etc/nginx/nginx.conf #  挂载配置了 nginx.conf 的 volume
+              subPath: NGINX_CONF
+              name: nginx-config 
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - sh
+                  - '-c'
+                  - sleep 5 && /usr/sbin/nginx -s quit # 优雅退出    
+
+      volumes:
+        - name: www-code # 三个个容器共享 都 volumeMounts 了
+          emptyDir: {}
+        - name: nginx-config 
+          configMap: # configMap 是一类特殊的 volume
+            name: common-env
+---
+kind: Service # 对象类型
+apiVersion: v1 # api 版本
+metadata: # 元数据
+  name: php-fpm-nginx
+spec:
+  selector:
+    app: php-fpm-nginx
+  ports:
+    - port: 80 
+      targetPort: 80 # Service 将 nginx 容器的 80 端口暴露出来
