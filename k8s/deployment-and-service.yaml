@@ -30,10 +30,10 @@ spec: # Deployment 对象规约
           image: leaveluke/fpm:v1 # 容器镜像
           imagePullPolicy: IfNotPresent
           ports:
-              - containerPort: 9000 # php-fpm 端口
+            - containerPort: 9000 # php-fpm 端口
           volumeMounts: # 挂载数据卷
-              - mountPath: /var/www # 挂载两个容器共享的 volume 
-                name: www-code
+            - mountPath: /var/www # 挂载两个容器共享的 volume 
+              name: www-code
           lifecycle: # 生命周期
             preStop:
               exec:
