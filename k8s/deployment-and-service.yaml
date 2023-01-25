@@ -27,7 +27,7 @@ spec: # Deployment 对象规约
         #     - mountPath: /code # 挂载两个容器共享的 volume 
         #       name: www-code
         - name: php-fpm # 第二个容器名称
-          image: leaveluke/fpm:v1 # 容器镜像
+          image: php:7.4.30-fpm # 容器镜像
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9000 # php-fpm 端口
