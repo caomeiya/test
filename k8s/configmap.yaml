@@ -6,41 +6,23 @@ data:
   APOLLO_URL: http://10.111.3.130:8080
   APOLLO_SECRET: f32c2125e656481885fcab7b2489c0a0
   NGINX_CONF: |
-    log_format custome '{ time: $time_iso8601|'
-                  'http_host:$http_host|'
-                  'cdn_ip:$remote_addr|'
-                  'request:$request|'
-                  'request_method:$request_method|'
-                  'http_user_agent:$http_user_agent|'
-                  'size:$body_bytes_sent|'
-                  'responsetime:$request_time|'
-                  'upstreamtime:$upstream_response_time|'
-                  'upstreamhost:$upstream_addr|'
-                  'upstreamstatus:$upstream_status|'
-                  'url:$http_host$uri|'
-                  'http_x_forwarded_for:$http_x_forwarded_for|'
-                  'referer:$http_referer|'
-                  'server_protocol:$server_protocol|'
-                  'status:$status}';
-    client_max_body_size 10m;
-    server {
-        listen       80;
-        server_name  _;
-        #add_header Access-Control-Allow-Origin *;
-        #add_header Access-Control-Allow-Headers *;
-        access_log  /var/log/nginx/wujushe.admin.access.log  custome;
-        error_log /var/log/nginx/wujushe.admin.error.log;
-
-        root   /var/www/public;
-        index  index.html index.htm index.php;
-        location / {
-            try_files $uri $uri/ /index.php?$query_string;
-        }
-        location ~ [^/]\.php(/|$) {
-            fastcgi_pass   127.0.0.1:9000;
-            fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
-            fastcgi_index  index.php;
-            include        fastcgi_params;
-        }
+    events {
     }
-
+    http {
+      server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        root /var/www;
+        index index.php;
+        server_name _;
+        location / {
+          try_files $uri $uri/ =404;
+        }
+        location ~ \.php$ {
+          include fastcgi_params;
+          fastcgi_param REQUEST_METHOD $request_method;
+          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+          fastcgi_pass 127.0.0.1:9000;
+        }
+      }
+    }
