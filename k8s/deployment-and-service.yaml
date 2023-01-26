@@ -42,7 +42,9 @@ spec: # Deployment 对象规约
                   - '-c'
                   - sleep 5 && kill -SIGQUIT 1 # 优雅退出
         - name: nginx # 第三个容器名称
-          image: nginx # 容器镜像
+          image: nginx:latest # 容器镜像
+          imagePullPolicy: IfNotPresent
+          
           ports:
             - containerPort: 80 # nginx 端口
           volumeMounts: # nginx 容器挂载了两个 volume，一个是与 代码容器共享的 volume，另外一个是配置了 nginx.conf 的 volume
