@@ -31,9 +31,6 @@ spec: # Deployment 对象规约
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9000 # php-fpm 端口
-          hard:
-            cpu: "1"
-            memory: 1G
           volumeMounts: # 挂载数据卷
             - mountPath: /var/www # 挂载两个容器共享的 volume 
               name: www-code
