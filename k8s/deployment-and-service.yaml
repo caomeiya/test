@@ -84,13 +84,14 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: php-fpm-nginx-ingress-ingress
+  name: php-fpm-nginx-ingress
 spec:
   rules:
     - host: k8s-php.com
       http:
         paths:
           - path: /
+            pathType: Prefix
             backend:
               service:
                 name: php-fpm-nginx-svc
