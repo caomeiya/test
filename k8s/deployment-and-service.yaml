@@ -23,7 +23,7 @@ spec: # Deployment 对象规约
         - name: php-code
           image: leaveluke/code:v1
           imagePullPolicy: IfNotPresent
-          command: ["sh", "-c", "cp -r /code /appdata"]
+          command: ["sh", "-c", "cp -r /code/ /appdata"]
           volumeMounts:
           - mountPath: /appdata
             name: www-code
